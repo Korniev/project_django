@@ -14,7 +14,7 @@ def index(request):
 
 @login_required
 def pictures(request):
-    pics = Picture.objects.all()
+    pics = Picture.objects.filter(user=request.user).all()
     return render(request, 'app_photo/pictures.html', context={"pics": pics})
 
 
@@ -24,6 +24,8 @@ def upload(request):
     if request.method == 'POST':
         form = PictureForm(request.POST, request.FILES, instance=Picture())
         if form.is_valid():
-            form.save()
+            pic = form.save(commit=False)
+            pic.user = request.user
+            pic.save()
             return redirect(to='app_photo:pictures')
     return render(request, 'app_photo/upload.html', context={'form': form})
