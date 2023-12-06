@@ -1,0 +1,19 @@
+{% extends 'app_photo/base.html' %}
+
+{% block content %}
+<div class="container mt-3">
+    <form action="{% url 'app_photo:edit' pic.id %}" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Description</label>
+            <input type="text" value="{{pic.description}}">
+            <div id="emailHelp" class="form-text">Description for picture</div>
+            <span>{{form.errors.description}}</span>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-secondary">Submit</button>
+    </form>
+</div>
+{% endblock %}
+
+
